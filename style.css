@@ -1,0 +1,110 @@
+.pos-main {
+  display: flex;
+  flex-direction: row;
+  width:100%;
+  height:100%;
+}
+.pos-purchase-list {
+  width: 70%;
+  height:300px;
+  overflow-y: scroll;
+  margin-left:5px;
+  margin-right:5px;
+  padding-left:5px;
+  border:2px solid #CCC;
+  border-radius:10px;
+}
+.pos-inventory-list {  
+  margin-left:10px;
+  margin-right:5px;
+}
+.list-item {
+  padding: 10px;
+  background-color: rgb(24, 23, 23);
+  border: 1px solid #ccc;
+  color: #fff;
+}
+
+.chat-label-container {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0;
+  width: 97%;
+  }
+  .chat-label-avatar {
+    width: 10%; 
+    height: 10%;
+    margin: 5px;
+  }
+  .chat-label-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }  
+.chat-label-text-container {
+  width:90%;
+  padding-left: 15px;
+}
+.chat-label-text-user {
+  font-weight: 900;
+  font-size: 0.7rem;
+}
+.chat-label-text {
+  font-weight: normal;
+  font-size: 1rem;
+}
+.chat-label-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 60px;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  display:flex;
+  justify-content: flex-end;
+  color: #aaa;
+  width: 100%;
+  margin-right:10px;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
