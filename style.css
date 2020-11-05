@@ -25,7 +25,7 @@
   color: #fff;
 }
 
-.chat-label-container {
+.list-item-container {
   display: flex;
   flex-direction: row;
   border: 2px solid #dedede;
@@ -35,29 +35,29 @@
   margin: 5px 0;
   width: 97%;
   }
-  .chat-label-avatar {
+  .list-item-url {
     width: 10%; 
     height: 10%;
     margin: 5px;
   }
-  .chat-label-avatar img {
+  .list-item-url img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }  
-.chat-label-text-container {
+.list-item-text-container {
   width:90%;
   padding-left: 15px;
 }
-.chat-label-text-user {
+.list-item-text-user {
   font-weight: 900;
   font-size: 0.7rem;
 }
-.chat-label-text {
+.list-item-text {
   font-weight: normal;
   font-size: 1rem;
 }
-.chat-label-container::after {
+.list-item-container::after {
   content: "";
   clear: both;
   display: table;
@@ -96,7 +96,7 @@
   margin-right:0;
 }
 
-.time-right {
+.list-item-content-right {
   display:flex;
   justify-content: flex-end;
   color: #aaa;
@@ -104,7 +104,7 @@
   margin-right:10px;
 }
 
-.time-left {
+.list-item-content-left {
   float: left;
   color: #999;
 }

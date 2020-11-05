@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="item-list"></div>
+  <div id="pos-screen"></div>
   <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
   <script crossorigin type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script> 
   <!--<script src="app.js"></script> -->
   <script type="text/babel">
-  const listEl = document.getElementById('item-list');
+  const listEl = document.getElementById('pos-screen');
   const inventoryItems = {
     'apple001': {sku: 'apple001', description:'Red Apples', quantity: 3, unitPrice:0.99, UOM: 'kg', url: '/images/redApples.jpg'},
     'banana001': {sku:'banana001', description:'Bananas', quantity: 2.5, unitPrice:0.69, UOM: 'kg', url: '/images/banana.jpg'},
@@ -22,54 +22,33 @@
   
   const ListItem = props => {
     return (      
-      <div className="chat-label-container">
-        <div class="chat-label-avatar"><img src={props.url} /></div>
-        <div className="chat-label-text-container">
-          <div className="chat-label-text">{props.description}</div>
+      <div className="list-item-container">
+        <div class="list-item-url"><img src={props.url} /></div>
+        <div className="list-item-text-container">
+          <div className="list-item-text">{props.description}</div>
         </div>
-        <div className="time-right">{props.quantity}</div>
-        <div className="time-right">{props.unitPrice}</div>
-        <div className="time-right">{props.total}</div>
-        <div className="time-right"><button>delete</button></div>
+        <div className="list-item-content-right">{props.quantity}</div>
+        <div className="list-item-content-right">{props.unitPrice}</div>
+        <div className="list-item-content-right">{props.total}</div>
+        <div className="list-item-content-right"><img src='images/delete.svg' /></div>
       </div>  
     );
   }
   const InventoryListItem = props => {
     return (      
-      <div className="chat-label-container" onClick={() => props.addItem(props.sku)}>
-        <div class="chat-label-avatar"><img src={props.url} /></div>
-        <div className="chat-label-text-container">
-          <div className="chat-label-text">{props.description}</div>
+      <div className="list-item-container" onClick={() => props.addItem(props.sku)}>
+        <div class="list-item-url"><img src={props.url} /></div>
+        <div className="list-item-text-container">
+          <div className="list-item-text">{props.description}</div>
         </div>
-        <div className="time-right">{props.unitPrice}</div>
+        <div className="list-item-content-right">{props.unitPrice}</div>
       </div>  
     );
   }  
-/*   class InventoryList extends React.Component {
-    addItem(sku)  {
-
-    }
-    render() {
-      const items = inventoryItems.map(item => {
-        return <InventoryListItem
-          sku={item.sku}
-          url={item.url} 
-          description={item.description}
-          unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
-          addItem={addItem}          
-        />
-      });
-    }
-  } */
   class POS extends React.Component {
     constructor() {
       super();
       this.state = {
-        /*items: [
-          {description:'Red Apples', quantity: 3, unitPrice:0.99, UOM: 'kg', url: '/images/redApples.jpg'},
-          {description:'Bananas', quantity: 2.5, unitPrice:0.69, UOM: 'kg', url: '/images/banana.jpg'},
-          {description:'Whole Wheat Flour 5.5 KG Pkg', quantity: 1, unitPrice:5.99, UOM: 'Ea.', url: '/images/pkgFlour.jpg'}
-        ]*/
         items: []
       };
     }
