@@ -53,10 +53,34 @@
         items: []
       };
     }
-    addItem(sku)  {
-      this.setState((prevState) => {
-        return {items: [...this.state.items, inventoryItems[sku]]};
+    create_UUID(){
+      let dt = new Date().getTime();
+      const uuid = 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = (dt + Math.random()*16)%16 | 0;
+          dt = Math.floor(dt/16);
+          return (c=='x' ? r :(r&0x3|0x8)).toString(16);
       });
+      return uuid;
+    } 
+    getItem(sku) {
+      const item = inventoryItems[sku];
+      item.uuid = this.create_UUID();
+      return item;
+    }
+    addItem(sku) {
+      const newItem = this.getItem(sku);
+      console.log("addItem", newItem.uuid);
+      this.setState((prevState) => {
+        return {items: [...this.state.items, newItem]};
+      });
+    }
+    deleteItem(uuid) {
+      console.log('delete', uuid);
+      this.setState((prevState) => {
+      return {items: prevState.items.filter(item => {
+        return item.uuid !== uuid;
+      })};
+    });      
     }
     render() {
       const itemsList = Object.values(inventoryItems).map(item => {
@@ -72,11 +96,14 @@
 
       const items = this.state.items.map(item =>{
         return <ListItem 
+          key={item.uuid}
+          uuid={item.uuid}
           url={item.url} 
           description={item.description}
           quantity={item.UOM.toUpperCase() !== 'EA.' ? `${item.quantity}${item.UOM}` : item.quantity}
           unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
           total={(item.unitPrice * item.quantity).toFixed(2)}
+          deleteItem={this.deleteItem.bind(this)}
         />
       });      
       return (
