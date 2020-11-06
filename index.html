@@ -14,6 +14,7 @@
   <script crossorigin type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script> 
   <!--<script src="app.js"></script> -->
   <script type="text/babel">
+  let uIndex = 1;
   const listEl = document.getElementById('pos-screen');
   const inventoryItems = {
     'apple001': {sku: 'apple001', description:'Red Apples', quantity: 1, unitPrice:0.99, UOM: 'kg', url: '/images/redApples.jpg'},
@@ -126,16 +127,14 @@
     };
     
     const getItem = sku => {
-      const item = inventoryItems[sku];
-      item.uuid = create_UUID();
-      return item;
+      const newItem = {...inventoryItems[sku], uuid: create_UUID()};
+      return newItem;
     }; 
     
     const calculate = () => {
       const calcSubTotal = items.reduce((accumulator, curVal)=> {
         return accumulator + curVal.unitPrice;
       }, 0);
-      console.log('calc total', calcSubTotal);
       const calcTax = calcSubTotal * 0.13;
       const calcTotal = calcSubTotal + calcTax;
       setTotals({
@@ -154,18 +153,15 @@
 
     const addItem = sku => {
       const newItem = getItem(sku);
-      console.log("addItem", newItem.uuid);
-      setItems([...items, newItem]);
-      //calculate();
+      const newArr = [...items, newItem];
+      setItems(newArr);
     };  
     
     const deleteItem = uuid => {
-      console.log('delete', uuid);
       const newItems = items.filter(item => {
         return item.uuid !== uuid;
       });
       setItems(newItems);
-      //calculate();      
     }; 
     
     const itemsList = Object.values(inventoryItems).map(item => {
@@ -178,7 +174,6 @@
         addItem={addItem}          
       />
     });
-
     const PurchaseListItems = items.map(item =>{
       return <ListItem 
         key={item.uuid}
