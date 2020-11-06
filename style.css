@@ -4,8 +4,22 @@
   width:100%;
   height:100%;
 }
+.pos-purchase-total {
+  display: flex;
+  flex-direction: column;  
+  width: 65%;
+  margin-right:20px;
+}
+.pos-totalsview {
+  margin-top:20px;
+  width:100%;
+  height:120px;
+  margin-left:5px;
+  margin-right:5px;
+  /*padding-left:5px;  */
+}
 .pos-purchase-list {
-  width: 70%;
+  width: 100%;
   height:300px;
   overflow-y: scroll;
   margin-left:5px;
@@ -107,4 +121,134 @@
 .list-item-content-left {
   float: left;
   color: #999;
+}
+.totalsSection
+{
+    height:100%;
+    width:100%;
+    background-color:#2694d1;
+    color:#ffffff;
+    padding:1px 1px 0px 5px;
+    border:2px solid #CCC;
+    border-radius:10px;  
+
+    /*border:1px solid #2694d1;
+    border-radius:3px;
+    padding:5px;*/
+}
+.Disc_Sub_Tax_Section
+{
+    float:left;width:25%;height:100%;
+}
+.Disc_Sub_Tax_Container
+{
+    float:left;height:100%;width:100%;overflow:hidden;border-right:2px solid #ffffff;
+}
+.Disc_Sub_Tax_Container table
+{
+    max-width:100%;
+}
+.Disc_Row
+{
+    border:0px;visibility:visible;
+}
+.Disc_Row_Col1
+{
+    max-width:50px;font-size:20px;font-weight:bold;overflow:hidden;
+}
+.Disc_Row_Col2
+{
+    max-width:90px;text-align:right;font-size:20px;font-weight:bold;overflow:hidden;
+}
+.SubT_Row
+{
+    border:0px;visibility:visible;overflow:hidden;
+}
+.SubT_Row_Col1
+{
+    width:50px;font-size:20px;font-weight:bold;bold;
+}
+.SubT_Row_Col2
+{
+   max-width:90px;text-align:right;font-size:20px;font-weight:bold;overflow:hidden;
+}
+.Tax_Row
+{
+    border:0px;visibility:visible;overflow:hidden;
+}
+.Tax_Row_Col1
+{
+    width:50px;font-size:20px;font-weight:bold;bold;
+}
+.Tax_Row_Col2
+{
+    max-width:90px;text-align:right;font-size:20px;font-weight:bold;overflow:hidden;
+}
+.TotalOuterDiv
+{
+    position:relative;top:0px;float:left;height:100%;width:42%;border-right:2px solid #ffffff;
+}
+.TotalInnerDiv
+{
+    position:relative;width:100%;height:100%;   
+}
+.TotalLabel
+{
+    position:absolute;top:0px;height:30%;width:100%;font-size:20px;font-weight:bold;text-align:center;
+}
+.TotalAmtContainer
+{
+    position:absolute;top:40px;float:right;height:75%;width:100%;text-align:right;
+}
+.TotalAmt
+{
+    width:100%;height:100%;line-height:1.1;font-size:58px;font-weight:bold;transform:scale(1,1.4);padding:0px;margin:0px;overflow:hidden;
+}
+.paidAndChangeSection
+{
+    float:right;
+    height:100%;
+    width:32%;
+    margin-top:5px;
+    padding-right:5px;
+}
+.paidContainer
+{
+    float:left;width:100%;height:35px;
+}
+.paidLabel
+{
+    float:left;height:35px;width:50px;font-size:20px;font-weight:bold;
+}
+.paidAmtContainer
+{
+    position:relative;float:right;height:35px;width:112px;
+}
+.paidAmt
+{
+    position:absolute;width:100%;font-size:20px;font-weight:bold;border:0px;padding:0px;margin:0px;text-align:right;
+}
+.chngContainer
+{
+    float:right;width:100%;height:35px;padding:0;margin:0;   
+}
+.chngLabel
+{
+    float:left;height:35px;width:78px;font-size:20px;font-weight:bold;
+}
+.chngAmtContainer
+{
+    position:relative;float:right;height:35px;width:112px;
+}
+.chngAmt
+{
+    position:absolute;width:100%;font-size:30px;font-weight:bold;border:0px;padding:0px;margin:0px;text-align:right;overflow:hidden;
+}
+.cartCountSection
+{
+    position:relative;float:right;width:100%;height:35px;padding:0;margin:0;
+}
+.cartCountSection span
+{
+    position:absolute;bottom:0px;right:-15px;text-align:right; color:yellow;padding-right:15px;width:100%;
 }

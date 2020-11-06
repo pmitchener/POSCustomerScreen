@@ -34,7 +34,7 @@
         <div className="list-item-content-right" onClick={() => props.deleteItem(props.uuid)}><i class="far fa-times-circle" style={{color:'#ff6666', fontSize:'40px', paddingTop:'6px'}}></i></div>
       </div>  
     );
-  };
+  }
   const InventoryListItem = props => {
     return (      
       <div className="list-item-container" onClick={() => props.addItem(props.sku)}>
@@ -46,7 +46,7 @@
         <div className="list-item-content-right"><i class="fas fa-cart-plus" style={{color:'#a8dcf0', fontSize:'40px', paddingTop:'6px'}}></i></div>
       </div>  
     );
-  }; 
+  } 
   const TotalsView = props => {
     return (
       <React.Fragment>
@@ -102,20 +102,22 @@
         {/*<!-- End of Totals section --> */}     
       </React.Fragment>
     );
-  }; 
-  function POS() {
-    const [items, setItems] = React.useState([]);
-    const [totals, setTotals] = React.useState({
+  } 
+  class POS extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        items: [],
         discount: 0,
         subTotal: 0,
         tax: 0,
         total: 0,
         paid: 0,
         change: 0,
-        cartCount: 0 
-      });
-
-    const create_UUID = () => {
+        cartCount: 0        
+      };
+    }
+    create_UUID(){
       let dt = new Date().getTime();
       const uuid = 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           const r = (dt + Math.random()*16)%16 | 0;
@@ -123,91 +125,81 @@
           return (c=='x' ? r :(r&0x3|0x8)).toString(16);
       });
       return uuid;
-    };
-    
-    const getItem = sku => {
+    } 
+    getItem(sku) {
       const item = inventoryItems[sku];
-      item.uuid = create_UUID();
+      item.uuid = this.create_UUID();
       return item;
-    }; 
-    
-    const calculate = () => {
-      const calcSubTotal = items.reduce((accumulator, curVal)=> {
+    }
+    calculate() {
+      const calcSubTotal = this.state.items.reduce((accumulator, curVal)=> {
         return accumulator + curVal.unitPrice;
       }, 0);
-      console.log('calc total', calcSubTotal);
+      console.log('total', calcSubTotal);
       const calcTax = calcSubTotal * 0.13;
       const calcTotal = calcSubTotal + calcTax;
-      setTotals({
-        discount: 0,
-        subTotal: calcSubTotal,
-        tax: calcTax,
-        total: calcTotal,
-        paid: 0,
-        change: 0,
-        cartCount: items.length 
-      });
-    };
-    React.useEffect(() =>{
-      calculate();
-    }, [items]);
-
-    const addItem = sku => {
-      const newItem = getItem(sku);
+      this.setState({subTotal: calcSubTotal});
+      this.setState({tax: calcTax});  
+      this.setState({total: calcTotal});
+      this.setState({cartCount: this.state.items.length});
+    }
+    addItem(sku) {
+      const newItem = this.getItem(sku);
       console.log("addItem", newItem.uuid);
-      setItems([...items, newItem]);
-      //calculate();
-    };  
-    
-    const deleteItem = uuid => {
-      console.log('delete', uuid);
-      const newItems = items.filter(item => {
-        return item.uuid !== uuid;
+      this.setState((prevState) => {
+        return {items: [...prevState.items, newItem]};
       });
-      setItems(newItems);
-      //calculate();      
-    }; 
-    
-    const itemsList = Object.values(inventoryItems).map(item => {
-      return <InventoryListItem
-        key={item.sku}
-        sku={item.sku}
-        url={item.url} 
-        description={item.description}
-        unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
-        addItem={addItem}          
-      />
-    });
+      this.calculate();
+    }
+    deleteItem(uuid) {
+      console.log('delete', uuid);
+      this.setState((prevState) => {
+        return {items: prevState.items.filter(item => {
+          return item.uuid !== uuid;
+        })};
+      });
+      this.calculate();      
+    }
+    render() {
+      const itemsList = Object.values(inventoryItems).map(item => {
+        return <InventoryListItem
+          key={item.sku}
+          sku={item.sku}
+          url={item.url} 
+          description={item.description}
+          unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
+          addItem={this.addItem.bind(this)}          
+        />
+      });
 
-    const PurchaseListItems = items.map(item =>{
-      return <ListItem 
-        key={item.uuid}
-        uuid={item.uuid}
-        url={item.url} 
-        description={item.description}
-        quantity={item.UOM.toUpperCase() !== 'EA.' ? `${item.quantity}${item.UOM}` : item.quantity}
-        unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
-        total={(item.unitPrice * item.quantity).toFixed(2)}
-        deleteItem={deleteItem}
-      />
-    });  
-    
-    return (
+      const items = this.state.items.map(item =>{
+        return <ListItem 
+          key={item.uuid}
+          uuid={item.uuid}
+          url={item.url} 
+          description={item.description}
+          quantity={item.UOM.toUpperCase() !== 'EA.' ? `${item.quantity}${item.UOM}` : item.quantity}
+          unitPrice={item.UOM.toUpperCase() !== 'EA.' ? `${item.unitPrice}/${item.UOM}` : item.unitPrice}
+          total={(item.unitPrice * item.quantity).toFixed(2)}
+          deleteItem={this.deleteItem.bind(this)}
+        />
+      });      
+      return (
         <div className="pos-main">
           <div className="pos-purchase-total">
           <div className="pos-purchase-list">
-            {PurchaseListItems}  
+            {items}  
           </div>
           <div className="pos-totalsview">
             {
               <TotalsView 
-                discount={totals.discount.toFixed(2)}
-                subTotal={totals.subTotal.toFixed(2)}
-                tax={totals.tax.toFixed(2)}
-                total={totals.total.toFixed(2)}
-                paid={totals.paid.toFixed(2)}
-                change={totals.change.toFixed(2)}
-                cartCount={totals.cartCount}           
+                discount={this.state.discount.toFixed(2)}
+                subTotal={this.state.subTotal.toFixed(2)}
+                tax={this.state.tax.toFixed(2)}
+                total={this.state.total.toFixed(2)}
+                paid={this.state.paid.toFixed(2)}
+                change={this.state.change.toFixed(2)}
+                cartCount={this.state.cartCount}           
               />
             }
           </div> 
@@ -216,9 +208,9 @@
             {itemsList}
           </div>
         </div>
-      );    
+      );
+    }
   }
-
   ReactDOM.render(<POS />, listEl);
   </script>  
 </body>
